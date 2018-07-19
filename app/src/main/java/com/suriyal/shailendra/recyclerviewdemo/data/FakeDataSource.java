@@ -61,4 +61,14 @@ public class FakeDataSource implements DataSourceInterface{
         ListItem listItem = new ListItem(datesAndTime[randOne], messages[randTwo], drawables[randThree]);
         return  listItem;
     }
+
+    @Override
+    public void deleteListItem(ListItem listItem) {
+
+    }
+
+    @Override
+    public void insertListItemAt(int temporaryListItemPosition) {
+
+    }
 }

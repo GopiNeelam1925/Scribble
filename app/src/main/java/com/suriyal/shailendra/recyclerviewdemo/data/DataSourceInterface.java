@@ -10,4 +10,8 @@ public interface DataSourceInterface {
     List<ListItem> getListOfData();
 
     ListItem createNewListItem();
+
+    void deleteListItem(ListItem listItem);
+
+    void insertListItemAt(int temporaryListItemPosition);
 }

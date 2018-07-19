@@ -1,18 +1,29 @@
 package com.suriyal.shailendra.recyclerviewdemo.view;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.transition.Fade;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.suriyal.shailendra.recyclerviewdemo.R;
@@ -20,7 +31,10 @@ import com.suriyal.shailendra.recyclerviewdemo.data.FakeDataSource;
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
 import com.suriyal.shailendra.recyclerviewdemo.logic.Controller;
 
+import java.io.BufferedInputStream;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by shailendra.suriyal
@@ -36,11 +50,14 @@ public class ListActivity extends AppCompatActivity implements  ViewInterface, V
 
     private LayoutInflater mLayoutInflater;
     private RecyclerView mRecyclerView;
+    private Toolbar mToolbar;
     private CustomAdapter mAdapter;
 
     private Controller mController;
 
 
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +65,11 @@ public class ListActivity extends AppCompatActivity implements  ViewInterface, V
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rec_list_activity);
         mLayoutInflater = getLayoutInflater();
+        mToolbar = findViewById(R.id.tlb_list_activity);
+        mToolbar.setTitle(R.string.title_toolbar);
+        mToolbar.setLogo(R.drawable.ic_view_list_white_24dp);
+        mToolbar.setTitleMarginStart(72);
+
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_create_new_item);
         floatingActionButton.setOnClickListener(this);
@@ -69,11 +91,28 @@ public class ListActivity extends AppCompatActivity implements  ViewInterface, V
 
 
     @Override
-    public void startDetailActivity(String dateAndTime, String message, int colorResource) {
+    public void startDetailActivity(String dateAndTime, String message, int colorResource, View viewRoot) {
         Intent i = new Intent(this, DetailActivity.class);
         i.putExtra(EXTRA_DATE_AND_TIME,dateAndTime);
         i.putExtra(EXTRA_DRAWABLES,colorResource);
         i.putExtra(EXTRA_MESSAGE,message);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(new Fade(Fade.IN));
+            getWindow().setEnterTransition(new Fade(Fade.OUT));
+
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(this,
+                            new Pair<View, String>(viewRoot.findViewById(R.id.imv_list_item_circle),
+                                    getString(R.string.transition_drawable)),
+                            new Pair<View, String>(viewRoot.findViewById(R.id.lbl_message),
+                                    getString(R.string.transition_message)),
+                            new Pair<View, String>(viewRoot.findViewById(R.id.lbl_date_and_time),
+                                    getString(R.string.transition_date_time)));
+            startActivity(i,options.toBundle());
+
+        }
+
         startActivity(i);
     }
 
@@ -86,9 +125,18 @@ public class ListActivity extends AppCompatActivity implements  ViewInterface, V
 
         mAdapter = new CustomAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),linearLayoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(ListActivity.this,R.drawable.divider_white));
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(mRecyclerView.getContext(),
+                linearLayoutManager.getOrientation());
+
+        dividerItemDecoration.setDrawable(
+                ContextCompat.getDrawable(ListActivity.this,
+                R.drawable.divider_white));
         mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(createHelperCallback());
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+
     }
 
     @Override
@@ -100,6 +148,43 @@ public class ListActivity extends AppCompatActivity implements  ViewInterface, V
         mAdapter.notifyItemInserted(endOfList);
 
         mRecyclerView.smoothScrollToPosition(endOfList);
+    }
+
+    @Override
+    public void deleteListItemAt(int position) {
+        mListItems.remove(position);
+
+        mAdapter.notifyItemRemoved(position);
+
+    }
+
+    @Override
+    public void showUndoSnackBar() {
+
+        Snackbar.make(
+                findViewById(R.id.root_list_activity),
+                getString(R.string.action_delete_item),
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mController.onUndoConfirmed();
+                    }
+                })
+                .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    @Override
+                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                        super.onDismissed(transientBottomBar, event);
+                        mController.onSnackbarTimeOut();
+                    }
+                }).show();
+    }
+
+    @Override
+    public void insertListItemAt(int position, ListItem listItem) {
+        mListItems.add(position,listItem);
+        mAdapter.notifyItemInserted(position);
+
     }
 
     private class CustomAdapter extends  RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
@@ -118,10 +203,11 @@ public class ListActivity extends AppCompatActivity implements  ViewInterface, V
         public void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, int i) {
             ListItem currentItem = mListItems.get(i);
 
-            customViewHolder.mColoredCircle.setBackgroundResource(currentItem.getColorResource());
+            customViewHolder.mColoredCircle.setImageResource(currentItem.getColorResource());
             customViewHolder.mDateAndTime.setText(currentItem.getDateAndTime());
             customViewHolder.mMessage.setText(currentItem.getMessage());
 
+            customViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -132,28 +218,58 @@ public class ListActivity extends AppCompatActivity implements  ViewInterface, V
 
         public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private  View mColoredCircle;
+            private CircleImageView mColoredCircle;
             private TextView mDateAndTime;
             private TextView mMessage;
             private ViewGroup mContainer;
+            private ProgressBar mProgressBar;
 
 
             public CustomViewHolder(@NonNull View itemView) {
                 super(itemView);
 
-                this.mColoredCircle = itemView.findViewById(R.id.imv_list_item_circle);
+                this.mColoredCircle = (CircleImageView) itemView.findViewById(R.id.imv_list_item_circle);
                 this.mDateAndTime = (TextView) itemView.findViewById(R.id.lbl_date_and_time);
                 this.mMessage = (TextView) itemView.findViewById(R.id.lbl_message);
                 this.mContainer = (ViewGroup) itemView.findViewById(R.id.root_list_item);
+                this.mProgressBar = (ProgressBar) itemView.findViewById(R.id.pro_item_data);
                 this.mContainer.setOnClickListener(this);
+
 
             }
 
             @Override
             public void onClick(View view) {
                 ListItem listItem = mListItems.get(this.getAdapterPosition());
-                mController.onListItemClicked(listItem);
+                mController.onListItemClicked(listItem,
+                        view);
             }
         }
+    }
+    private  ItemTouchHelper.Callback createHelperCallback() {
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(
+                0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            //not used, as the first parameter above is 0
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                  RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                int position = viewHolder.getAdapterPosition();
+                mController.onListItemSwiped(
+                        position,
+                        mListItems.get(position)
+                );
+            }
+        };
+
+        return simpleItemTouchCallback;
+
     }
 }

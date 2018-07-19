@@ -1,5 +1,7 @@
 package com.suriyal.shailendra.recyclerviewdemo.view;
 
+import android.view.View;
+
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
 
 import java.util.List;
@@ -9,9 +11,15 @@ import java.util.List;
  */
 public interface ViewInterface {
 
-    void startDetailActivity(String dateAndTime, String message, int colorResource);
+    void startDetailActivity(String dateAndTime, String message, int colorResource, View viewRoot);
 
     void setupAdapterAndView(List<ListItem> listData);
 
     void addNewListItemToView(ListItem listItem);
+
+    void deleteListItemAt(int position);
+
+    void showUndoSnackBar();
+
+    void insertListItemAt(int temporaryListItemPosition, ListItem temporaryListItem);
 }

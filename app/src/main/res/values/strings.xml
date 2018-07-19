@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">RecyclerViewDemo</string>
+    <string name="action_delete_item">Item Deleted</string>
+    <string name="action_undo">Undo</string>
+    <string name="transition_drawable">transition drawable</string>
+    <string name="transition_message">transition message</string>
+    <string name="transition_date_time">transition date and time</string>
+    <string name="dateAndTime">DateAndTime</string>
+    <string name="title_toolbar">List Activity</string>
 </resources>
