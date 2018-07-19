@@ -1,7 +1,9 @@
-package com.suriyal.shailendra.recyclerviewdemo;
+package com.suriyal.shailendra.recyclerviewdemo.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.suriyal.shailendra.recyclerviewdemo.R;
 
 /**
  * Created by shailendra.suriyal
