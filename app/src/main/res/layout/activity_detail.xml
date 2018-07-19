@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".view.DetailActivity">
     <View
-        android:id="@+id/container_colored_bacground"
+        android:id="@+id/container_colored_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/div_center"
         android:background="@color/RED"/>
 
     <TextView
-        android:id="@+id/lbl_dat_and_time_header"
+        android:id="@+id/lbl_date_and_time_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
