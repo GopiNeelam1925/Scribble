@@ -12,6 +12,7 @@ import java.util.Random;
 public class FakeDataSource implements DataSourceInterface{
 
     private static  final int SIZE_OF_COLLECTION = 12;
+    private Random mRandom;
 
     private final  String[] datesAndTime = {
             "6:30AM",
@@ -27,34 +28,37 @@ public class FakeDataSource implements DataSourceInterface{
             "are you"
     };
 
-    private final int[] colors = {
-            R.color.RED,
-            R.color.GREEN,
-            R.color.BLUE,
-            R.color.YELLOW,
+    private final int[] drawables = {
+            R.drawable.red_drawable,
+            R.drawable.green_drawable,
+            R.drawable.blue_drawable,
+            R.drawable.yellow_drawable
     };
 
     public FakeDataSource() {
+        mRandom = new Random();
 
     }
 
     @Override
     public List<ListItem> getListOfData() {
         ArrayList<ListItem> listOfData = new ArrayList<>();
+
+        for (int i = 0; i< 12; i++) {
+            listOfData.add(createNewListItem());
+        }
+        return listOfData;
+    }
+
+    @Override
+    public ListItem createNewListItem() {
         int randOne ;
         int randTwo ;
         int randThree;
-
-        Random random = new Random();
-
-        for (int i = 0; i< 12; i++) {
-
-            randOne = random.nextInt(4);
-            randTwo = random.nextInt(4);
-            randThree = random.nextInt(4);
-            ListItem listItem = new ListItem(datesAndTime[randOne], messages[randTwo], colors[randThree]);
-            listOfData.add(listItem);
-        }
-        return listOfData;
+        randOne = mRandom.nextInt(4);
+        randTwo = mRandom.nextInt(4);
+        randThree = mRandom.nextInt(4);
+        ListItem listItem = new ListItem(datesAndTime[randOne], messages[randTwo], drawables[randThree]);
+        return  listItem;
     }
 }

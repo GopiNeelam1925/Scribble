@@ -35,4 +35,10 @@ public class Controller {
                 testItem.getColorResource());
         return;
     }
+
+    public void createNewListItem() {
+        ListItem listItem = mDataSourceInterface.createNewListItem();
+
+        mViewInterface.addNewListItemToView(listItem);
+    }
 }
