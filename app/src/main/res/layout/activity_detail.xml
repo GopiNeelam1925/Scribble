@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity">
+    <View
+        android:id="@+id/container_colored_bacground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/div_center"
+        android:background="@color/RED"/>
+
+    <TextView
+        android:id="@+id/lbl_dat_and_time_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_above="@+id/div_center"
+        tools:text="2:43Am 01/23/2018"
+        style="@style/Text.Primary"/>
+    <View
+        android:id="@+id/div_center"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/lbl_message_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_below="@+id/div_center"
+        style="@style/Text.Secondary"
+        tools:text="Check  out content : Intimetec, cartos and smartvault android app"/>
+
+
+
+
+</RelativeLayout>
