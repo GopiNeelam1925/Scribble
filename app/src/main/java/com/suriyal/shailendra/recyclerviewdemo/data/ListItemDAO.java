@@ -23,7 +23,7 @@ public interface ListItemDAO {
     LiveData<ListItem> getListItemById(String itemId);
 
     @Insert(onConflict = REPLACE)
-    Long insertListItem();
+    Long insertListItem(ListItem listItem);
 
     @Delete
     void deleteListItem(ListItem listItem);
