@@ -1,5 +1,7 @@
 package com.suriyal.shailendra.recyclerviewdemo.data;
 
+import android.arch.persistence.room.Insert;
+
 import com.suriyal.shailendra.recyclerviewdemo.R;
 
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.Random;
 /**
  * Created by shailendra.suriyal
  */
-public class FakeDataSource implements DataSourceInterface{
+public class FakeDataSource implements ListItemDAO {
 
     private static  final int SIZE_OF_COLLECTION = 12;
     private Random mRandom;
@@ -41,7 +43,7 @@ public class FakeDataSource implements DataSourceInterface{
     }
 
     @Override
-    public List<ListItem> getListOfData() {
+    public List<ListItem> getListItems() {
         ArrayList<ListItem> listOfData = new ArrayList<>();
 
         for (int i = 0; i< 12; i++) {
@@ -50,6 +52,7 @@ public class FakeDataSource implements DataSourceInterface{
         return listOfData;
     }
 
+    @Insert
     @Override
     public ListItem createNewListItem() {
         int randOne ;

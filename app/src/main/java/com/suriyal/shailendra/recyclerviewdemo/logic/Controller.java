@@ -2,9 +2,9 @@ package com.suriyal.shailendra.recyclerviewdemo.logic;
 
 import android.view.View;
 
-import com.suriyal.shailendra.recyclerviewdemo.data.DataSourceInterface;
+import com.suriyal.shailendra.recyclerviewdemo.data.ListItemDAO;
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
-import com.suriyal.shailendra.recyclerviewdemo.view.ViewInterface;
+import com.suriyal.shailendra.recyclerviewdemo.list.ViewInterface;
 
 /**
  * Created by shailendra.suriyal
@@ -12,21 +12,21 @@ import com.suriyal.shailendra.recyclerviewdemo.view.ViewInterface;
 public class Controller {
 
     private ViewInterface mViewInterface;
-    private DataSourceInterface mDataSourceInterface;
+    private ListItemDAO mListItemDAO;
 
     private  ListItem temporaryListItem;
     private int temporaryListItemPosition;
 
-    public Controller(ViewInterface viewInterface, DataSourceInterface dataSourceInterface) {
+    public Controller(ViewInterface viewInterface, ListItemDAO listItemDAO) {
         mViewInterface = viewInterface;
-        mDataSourceInterface = dataSourceInterface;
+        mListItemDAO = listItemDAO;
 
         getListFromDataSource();
     }
 
     public void getListFromDataSource() {
         mViewInterface.setupAdapterAndView(
-                mDataSourceInterface.getListOfData()
+                mListItemDAO.getListItems()
         );
         return;
     }
@@ -43,13 +43,13 @@ public class Controller {
     }
 
     public void createNewListItem() {
-        ListItem listItem = mDataSourceInterface.createNewListItem();
+        ListItem listItem = mListItemDAO.createNewListItem();
 
         mViewInterface.addNewListItemToView(listItem);
     }
 
     public void onListItemSwiped(int position, ListItem listItem) {
-        mDataSourceInterface.deleteListItem(listItem);
+        mListItemDAO.deleteListItem(listItem);
         mViewInterface.deleteListItemAt(position);
 
         temporaryListItem = listItem;
@@ -61,7 +61,7 @@ public class Controller {
     public void onUndoConfirmed() {
         if (temporaryListItem != null) {
             //
-            mDataSourceInterface.insertListItemAt(temporaryListItemPosition);
+            mListItemDAO.insertListItemAt(temporaryListItemPosition);
             mViewInterface.insertListItemAt(temporaryListItemPosition,temporaryListItem);
             temporaryListItem = null;
             temporaryListItemPosition = 0;

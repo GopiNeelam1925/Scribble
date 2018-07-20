@@ -1,4 +1,4 @@
-package com.suriyal.shailendra.recyclerviewdemo.view;
+package com.suriyal.shailendra.recyclerviewdemo.list;
 
 import android.view.View;
 

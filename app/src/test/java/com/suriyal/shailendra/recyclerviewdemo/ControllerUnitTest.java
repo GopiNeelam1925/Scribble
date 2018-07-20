@@ -1,11 +1,9 @@
 package com.suriyal.shailendra.recyclerviewdemo;
 
-import android.view.View;
-
-import com.suriyal.shailendra.recyclerviewdemo.data.DataSourceInterface;
+import com.suriyal.shailendra.recyclerviewdemo.data.ListItemDAO;
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
 import com.suriyal.shailendra.recyclerviewdemo.logic.Controller;
-import com.suriyal.shailendra.recyclerviewdemo.view.ViewInterface;
+import com.suriyal.shailendra.recyclerviewdemo.list.ViewInterface;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -28,7 +24,7 @@ import static org.junit.Assert.*;
 public class ControllerUnitTest {
 
     @Mock
-    DataSourceInterface mDataSourceInterface;
+    ListItemDAO mListItemDAO;
 
     @Mock
     ViewInterface mViewInterface;
@@ -39,7 +35,7 @@ public class ControllerUnitTest {
     @Before
     public void setUpTest() {
         MockitoAnnotations.initMocks(this);
-        mController = new Controller(mViewInterface, mDataSourceInterface);
+        mController = new Controller(mViewInterface, mListItemDAO);
     }
 
     @Test
@@ -49,7 +45,7 @@ public class ControllerUnitTest {
         listItems.add(testItem);
 
         //Set up our mocjs to return the data we want
-        Mockito.when(mDataSourceInterface.getListOfData()).thenReturn(listItems);
+        Mockito.when(mListItemDAO.getListItems()).thenReturn(listItems);
 
         //Call the method(Unit) we are testing
         mController.getListFromDataSource();

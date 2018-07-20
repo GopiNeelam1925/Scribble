@@ -1,11 +1,16 @@
 package com.suriyal.shailendra.recyclerviewdemo.data;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by shailendra.suriyal
  */
 
+@Entity
 public class ListItem {
 
+    @PrimaryKey
     private String dateAndTime;
     private String message;
     private int colorResource;

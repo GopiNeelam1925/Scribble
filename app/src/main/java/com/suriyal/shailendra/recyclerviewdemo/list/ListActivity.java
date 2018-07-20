@@ -1,10 +1,10 @@
-package com.suriyal.shailendra.recyclerviewdemo.view;
+package com.suriyal.shailendra.recyclerviewdemo.list;
 
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BaseTransientBottomBar;
@@ -12,7 +12,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +30,6 @@ import com.suriyal.shailendra.recyclerviewdemo.data.FakeDataSource;
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
 import com.suriyal.shailendra.recyclerviewdemo.logic.Controller;
 
-import java.io.BufferedInputStream;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -63,7 +61,7 @@ public class ListActivity extends AppCompatActivity implements  ViewInterface, V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.rec_list_activity);
+        mRecyclerView = findViewById(R.id.rec_list_activity);
         mLayoutInflater = getLayoutInflater();
         mToolbar = findViewById(R.id.tlb_list_activity);
         mToolbar.setTitle(R.string.title_toolbar);
@@ -228,11 +226,11 @@ public class ListActivity extends AppCompatActivity implements  ViewInterface, V
             public CustomViewHolder(@NonNull View itemView) {
                 super(itemView);
 
-                this.mColoredCircle = (CircleImageView) itemView.findViewById(R.id.imv_list_item_circle);
-                this.mDateAndTime = (TextView) itemView.findViewById(R.id.lbl_date_and_time);
-                this.mMessage = (TextView) itemView.findViewById(R.id.lbl_message);
-                this.mContainer = (ViewGroup) itemView.findViewById(R.id.root_list_item);
-                this.mProgressBar = (ProgressBar) itemView.findViewById(R.id.pro_item_data);
+                this.mColoredCircle = itemView.findViewById(R.id.imv_list_item_circle);
+                this.mDateAndTime = itemView.findViewById(R.id.lbl_date_and_time);
+                this.mMessage = itemView.findViewById(R.id.lbl_message);
+                this.mContainer = itemView.findViewById(R.id.root_list_item);
+                this.mProgressBar = itemView.findViewById(R.id.pro_item_data);
                 this.mContainer.setOnClickListener(this);
 
 
