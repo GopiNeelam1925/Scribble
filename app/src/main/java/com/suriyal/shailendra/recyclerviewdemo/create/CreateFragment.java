@@ -122,13 +122,13 @@ public class CreateFragment extends Fragment {
     public int getDrawableResource (int pagerItemPosition){
         switch (pagerItemPosition){
             case 0:
-                return R.drawable.round_alarm_24;
+                return R.drawable.round_add_shopping_cart_24 ;
             case 1:
-                return R.drawable.round_add_shopping_cart_24;
+                return R.drawable.round_work_outline_24 ;
             case 2:
                 return R.drawable.round_flight_takeoff_24;
             case 3:
-                return R.drawable.round_work_outline_24;
+                return R.drawable.round_alarm_24;
             default:
                 return 0;
         }
@@ -149,16 +149,16 @@ public class CreateFragment extends Fragment {
 
             switch (position) {
                 case 0:
-                    pagerItem.setImageResource(R.drawable.round_alarm_24);
+                    pagerItem.setImageResource(R.drawable.round_add_shopping_cart_24);
                     break;
                 case 1:
-                    pagerItem.setImageResource(R.drawable.round_add_shopping_cart_24);
+                    pagerItem.setImageResource(R.drawable.round_work_outline_24);
                     break;
                 case 2:
                     pagerItem.setImageResource(R.drawable.round_flight_takeoff_24);
                     break;
                 case 3:
-                    pagerItem.setImageResource(R.drawable.round_work_outline_24);
+                    pagerItem.setImageResource(R.drawable.round_alarm_24);
                     break;
             }
 
