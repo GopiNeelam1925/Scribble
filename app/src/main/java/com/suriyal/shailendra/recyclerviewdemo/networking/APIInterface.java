@@ -1,6 +1,6 @@
 package com.suriyal.shailendra.recyclerviewdemo.networking;
 
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
+import com.suriyal.shailendra.recyclerviewdemo.data.Note;
 
 import java.util.List;
 
@@ -18,10 +18,10 @@ public interface APIInterface {
 
 
     @GET("/notes")
-    Call<List<ListItem>> doGetListResources();
+    Call<List<Note>> doGetListResources();
 
     @POST("/notes")
-    Call<ListItem> createListItem(@Body ListItem listItem);
+    Call<Note> createListItem(@Body Note note);
 
     // delete Gist
     @DELETE("notes/{id}")

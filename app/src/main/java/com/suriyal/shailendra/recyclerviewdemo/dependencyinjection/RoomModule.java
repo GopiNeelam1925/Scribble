@@ -7,9 +7,9 @@ import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.persistence.room.Room;
 
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItemDAO;
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItemDatabase;
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItemRepository;
+import com.suriyal.shailendra.recyclerviewdemo.data.NoteDAO;
+import com.suriyal.shailendra.recyclerviewdemo.data.NoteDatabase;
+import com.suriyal.shailendra.recyclerviewdemo.data.NoteRepository;
 import com.suriyal.shailendra.recyclerviewdemo.viewmodel.CustomViewModelFactory;
 
 import javax.inject.Singleton;
@@ -20,37 +20,37 @@ import dagger.Provides;
 @Module
 public class RoomModule {
 
-    private final ListItemDatabase database;
+    private final NoteDatabase database;
 
     public RoomModule(Application application) {
         this.database = Room.databaseBuilder(
                 application,
-                ListItemDatabase.class,
-                "ListItem.db"
+                NoteDatabase.class,
+                "Note.db"
         ).build();
     }
 
     @Provides
     @Singleton
-    ListItemRepository provideListItemRepository(ListItemDAO listItemDao){
-        return new ListItemRepository(listItemDao);
+    NoteRepository provideNoteRepository(NoteDAO listItemDao){
+        return new NoteRepository(listItemDao);
     }
 
     @Provides
     @Singleton
-    ListItemDAO provideListItemDao(ListItemDatabase database){
-        return database.mListItemDAO();
+    NoteDAO provideListItemDao(NoteDatabase database){
+        return database.mNoteDAO();
     }
 
     @Provides
     @Singleton
-    ListItemDatabase provideListItemDatabase(Application application){
+    NoteDatabase provideNoteDatabase(Application application){
         return database;
     }
 
     @Provides
     @Singleton
-    ViewModelProvider.Factory provideViewModelFactory(ListItemRepository repository){
+    ViewModelProvider.Factory provideViewModelFactory(NoteRepository repository){
         return new CustomViewModelFactory(repository);
     }
 }

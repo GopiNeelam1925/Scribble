@@ -4,8 +4,8 @@ import android.arch.lifecycle.ViewModel;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItemRepository;
+import com.suriyal.shailendra.recyclerviewdemo.data.Note;
+import com.suriyal.shailendra.recyclerviewdemo.data.NoteRepository;
 import com.suriyal.shailendra.recyclerviewdemo.networking.APIClient;
 import com.suriyal.shailendra.recyclerviewdemo.networking.APIInterface;
 
@@ -16,11 +16,11 @@ import retrofit2.Response;
 /**
  * Created by shailendra.suriyal
  */
-public class NewListItemViewModel extends ViewModel {
+public class NewNoteViewModel extends ViewModel {
 
-    private ListItemRepository repository;
+    private NoteRepository repository;
 
-    NewListItemViewModel(ListItemRepository repository) {
+    NewNoteViewModel(NoteRepository repository) {
         this.repository = repository;
         mAPIInterface = APIClient.getClient().create(APIInterface.class);
     }
@@ -29,25 +29,25 @@ public class NewListItemViewModel extends ViewModel {
     /**
      * Attach our LiveData to the Database
      */
-    public void addNewItemToDatabase(ListItem listItem){
+    public void addNewItemToDatabase(Note note){
 
-        new AddItemTaskToDatabase().execute(listItem);
-        new AddItemTaskToServerDatabase().execute(listItem);
+        new AddItemTaskToDatabase().execute(note);
+        new AddItemTaskToServerDatabase().execute(note);
     }
 
-    private class AddItemTaskToServerDatabase extends AsyncTask<ListItem, Void, Void> {
+    private class AddItemTaskToServerDatabase extends AsyncTask<Note, Void, Void> {
 
         @Override
-        protected Void doInBackground(ListItem... item) {
-            Call<ListItem> call1 = mAPIInterface.createListItem(item[0]);
-            call1.enqueue(new Callback<ListItem>() {
+        protected Void doInBackground(Note... item) {
+            Call<Note> call1 = mAPIInterface.createListItem(item[0]);
+            call1.enqueue(new Callback<Note>() {
                 @Override
-                public void onResponse(Call<ListItem> call, Response<ListItem> response) {
+                public void onResponse(Call<Note> call, Response<Note> response) {
                     Log.d(this.getClass().getCanonicalName(), "Item Successfully added Shailu");
                 }
 
                 @Override
-                public void onFailure(Call<ListItem> call, Throwable t) {
+                public void onFailure(Call<Note> call, Throwable t) {
                     Log.d(this.getClass().getCanonicalName(), "Item Successfully added Shailu");
 
                     call.cancel();
@@ -58,10 +58,10 @@ public class NewListItemViewModel extends ViewModel {
     }
 
 
-    private class AddItemTaskToDatabase extends AsyncTask<ListItem, Void, Void> {
+    private class AddItemTaskToDatabase extends AsyncTask<Note, Void, Void> {
 
         @Override
-        protected Void doInBackground(ListItem... item) {
+        protected Void doInBackground(Note... item) {
             repository.insertListItem(item[0]);
             return null;
         }

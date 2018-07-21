@@ -10,27 +10,27 @@ import android.support.annotation.NonNull;
  */
 
 @Entity
-public class ListItem {
+public class Note {
 
 
     @PrimaryKey
     @NonNull
-    private String itemId;
+    private String mNoteId;
     private String message;
     private int colorResource;
 
-    public ListItem(String itemId, String message, int colorResource) {
-        this.itemId = itemId;
+    public Note(String mNoteId, String message, int colorResource) {
+        this.mNoteId = mNoteId;
         this.message = message;
         this.colorResource = colorResource;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getNoteId() {
+        return mNoteId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setNoteId(String noteId) {
+        this.mNoteId = noteId;
     }
 
     public String getMessage() {

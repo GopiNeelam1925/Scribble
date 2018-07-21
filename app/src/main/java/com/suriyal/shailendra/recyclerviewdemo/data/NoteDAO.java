@@ -14,19 +14,19 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
  * Created by shailendra.suriyal
  */
 @Dao
-public interface ListItemDAO {
+public interface NoteDAO {
 
-    @Query("SELECT * FROM ListItem")
-    LiveData<List<ListItem>> getListItems();
+    @Query("SELECT * FROM Note")
+    LiveData<List<Note>> getNotes();
 
-    @Query("SELECT * FROM ListItem WHERE itemId = :itemId")
-    LiveData<ListItem> getListItemById(String itemId);
+    @Query("SELECT * FROM Note WHERE mNoteId = :itemId")
+    LiveData<Note> getNoteById(String itemId);
 
     @Insert(onConflict = REPLACE)
-    Long insertListItem(ListItem listItem);
+    Long insertNote(Note note);
 
     @Delete
-    void deleteListItem(ListItem listItem);
+    void deleteNote(Note note);
 
 
 }

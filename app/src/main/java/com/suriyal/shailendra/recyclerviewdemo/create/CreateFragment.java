@@ -17,9 +17,9 @@ import android.widget.ImageView;
 
 import com.suriyal.shailendra.recyclerviewdemo.R;
 import com.suriyal.shailendra.recyclerviewdemo.RoomDemoApplication;
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
+import com.suriyal.shailendra.recyclerviewdemo.data.Note;
 import com.suriyal.shailendra.recyclerviewdemo.list.ListActivity;
-import com.suriyal.shailendra.recyclerviewdemo.viewmodel.NewListItemViewModel;
+import com.suriyal.shailendra.recyclerviewdemo.viewmodel.NewNoteViewModel;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.text.DateFormat;
@@ -47,7 +47,7 @@ public class CreateFragment extends Fragment {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
-    private NewListItemViewModel newListItemViewModel;
+    private NewNoteViewModel mNewNoteViewModel;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -72,8 +72,8 @@ public class CreateFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //Set up and subscribe (observe) to the ViewModel
-        newListItemViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(NewListItemViewModel.class);
+        mNewNoteViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(NewNoteViewModel.class);
 
     }
 
@@ -95,12 +95,12 @@ public class CreateFragment extends Fragment {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListItem listItem = new ListItem(
+                Note note = new Note(
                         getDate(),
                         messageInput.getText().toString(),
                         getDrawableResource(drawablePager.getCurrentItem())
                 );
-                newListItemViewModel.addNewItemToDatabase(listItem);
+                mNewNoteViewModel.addNewItemToDatabase(note);
 
                 startListActivity();
             }

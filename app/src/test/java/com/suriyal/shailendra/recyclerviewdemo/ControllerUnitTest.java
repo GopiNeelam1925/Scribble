@@ -1,7 +1,7 @@
 package com.suriyal.shailendra.recyclerviewdemo;
 
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItemDAO;
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
+import com.suriyal.shailendra.recyclerviewdemo.data.Note;
 import com.suriyal.shailendra.recyclerviewdemo.logic.Controller;
 import com.suriyal.shailendra.recyclerviewdemo.list.ViewInterface;
 
@@ -30,7 +30,7 @@ public class ControllerUnitTest {
     ViewInterface mViewInterface;
 
     Controller mController;
-    private static final ListItem testItem = new ListItem("6:30AM","H3llo",R.color.RED);
+    private static final Note testItem = new Note("6:30AM","H3llo",R.color.RED);
 
     @Before
     public void setUpTest() {
@@ -41,18 +41,18 @@ public class ControllerUnitTest {
     @Test
     public void onGetListDataSuccessful() {
         //Set up any data we need for the test
-        ArrayList<ListItem> listItems = new ArrayList<>();
-        listItems.add(testItem);
+        ArrayList<Note> notes = new ArrayList<>();
+        notes.add(testItem);
 
         //Set up our mocjs to return the data we want
-        Mockito.when(mListItemDAO.getListItems()).thenReturn(listItems);
+        Mockito.when(mListItemDAO.getListItems()).thenReturn(notes);
 
         //Call the method(Unit) we are testing
         mController.getListFromDataSource();
 
         //Check how the tested class responds to the data it receives
 
-        Mockito.verify(mViewInterface).setupAdapterAndView(listItems);
+        Mockito.verify(mViewInterface).setupAdapterAndView(notes);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class ControllerUnitTest {
         mController.onListItemClicked(testItem);
 
         Mockito.verify(mViewInterface).startDetailActivity(
-                testItem.getItemId(),
+                testItem.getNoteId(),
                 testItem.getMessage(),
                 testItem.getColorResource());
     }
