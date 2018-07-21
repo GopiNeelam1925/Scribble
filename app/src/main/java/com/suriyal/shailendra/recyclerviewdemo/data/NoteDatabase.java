@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 /**
  * Created by shailendra.suriyal
  */
-@Database(entities = {Note.class},version = 1)
+@Database(entities = {Note.class},version = 2)
 public abstract class NoteDatabase extends RoomDatabase {
 
     public abstract NoteDAO mNoteDAO();
