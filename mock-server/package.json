@@ -4,7 +4,7 @@
   "description": "It's a mock server for any Frontend for seamless development",
   "main": "index.js",
   "scripts": {
-    "json:server": "json-server --watch db.json"
+    "json:server": "json-server --watch db.json --host 0.0.0.0"
   },
   "repository": {
     "type": "git",
