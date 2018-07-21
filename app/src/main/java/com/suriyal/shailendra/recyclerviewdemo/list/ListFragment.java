@@ -30,6 +30,7 @@ import com.suriyal.shailendra.recyclerviewdemo.R;
 import com.suriyal.shailendra.recyclerviewdemo.RoomDemoApplication;
 import com.suriyal.shailendra.recyclerviewdemo.create.CreateActivity;
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
+import com.suriyal.shailendra.recyclerviewdemo.details.DetailActivity;
 import com.suriyal.shailendra.recyclerviewdemo.viewmodel.ListItemCollectionViewModel;
 
 import java.util.List;

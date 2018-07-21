@@ -26,7 +26,7 @@ public class CustomViewModelFactory implements ViewModelProvider.Factory {
 
         } else if(modelClass.isAssignableFrom(ListItemViewModel.class)) {
 
-            return (T) new ListItemCollectionViewModel(mListItemRepository);
+            return (T) new ListItemViewModel(mListItemRepository);
 
         } else if(modelClass.isAssignableFrom(NewListItemViewModel.class)) {
 
