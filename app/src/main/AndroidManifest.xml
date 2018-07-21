@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.suriyal.shailendra.recyclerviewdemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name="com.suriyal.shailendra.recyclerviewdemo.RoomDemoApplication"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".list.DetailActivity" />
         <activity android:name=".create.CreateActivity" />
         <activity android:name=".details.DetailActivity"/>
     </application>
