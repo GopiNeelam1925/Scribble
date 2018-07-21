@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/div_center"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:transitionName="@string/transition_drawable" />
 
 
@@ -53,6 +53,7 @@
         />
 
     <TextView
+        style="@style/Text.Secondary"
         android:id="@+id/lbl_message_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
