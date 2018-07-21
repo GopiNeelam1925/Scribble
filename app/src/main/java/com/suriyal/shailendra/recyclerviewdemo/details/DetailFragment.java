@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.suriyal.shailendra.recyclerviewdemo.R;
 import com.suriyal.shailendra.recyclerviewdemo.RoomDemoApplication;
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
-import com.suriyal.shailendra.recyclerviewdemo.viewmodel.ListItemViewModel;
+import com.suriyal.shailendra.recyclerviewdemo.data.Note;
+import com.suriyal.shailendra.recyclerviewdemo.viewmodel.NoteViewModel;
 
 import javax.inject.Inject;
 
@@ -39,7 +39,7 @@ public class DetailFragment extends Fragment {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
-    ListItemViewModel listItemViewModel;
+    NoteViewModel mNoteViewModel;
 
     public DetailFragment() {
     }
@@ -71,16 +71,16 @@ public class DetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //Set up and subscribe (observe) to the ViewModel
-        listItemViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(ListItemViewModel.class);
+        mNoteViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(NoteViewModel.class);
 
-        listItemViewModel.getListItemById(itemId).observe(this, new Observer<ListItem>() {
+        mNoteViewModel.getListItemById(itemId).observe(this, new Observer<Note>() {
             @Override
-            public void onChanged(@Nullable ListItem listItem) {
-                if (listItem != null) {
-                    dateAndTime.setText(listItem.getItemId());
-                    message.setText(listItem.getMessage());
-                    coloredBackground.setImageResource(listItem.getColorResource());
+            public void onChanged(@Nullable Note note) {
+                if (note != null) {
+                    dateAndTime.setText(note.getNoteId());
+                    message.setText(note.getMessage());
+                    coloredBackground.setImageResource(note.getColorResource());
                 }
 
             }

@@ -4,33 +4,33 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItemRepository;
+import com.suriyal.shailendra.recyclerviewdemo.data.NoteRepository;
 
 /**
  * Created by shailendra.suriyal
  */
 public class CustomViewModelFactory implements ViewModelProvider.Factory {
 
-    private final ListItemRepository mListItemRepository;
+    private final NoteRepository mListItemRepository;
 
-    public CustomViewModelFactory(ListItemRepository listItemRepository) {
+    public CustomViewModelFactory(NoteRepository listItemRepository) {
         mListItemRepository = listItemRepository;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if(modelClass.isAssignableFrom(ListItemCollectionViewModel.class)) {
+        if(modelClass.isAssignableFrom(NoteCollectionViewModel.class)) {
 
-            return (T) new ListItemCollectionViewModel(mListItemRepository);
+            return (T) new NoteCollectionViewModel(mListItemRepository);
 
-        } else if(modelClass.isAssignableFrom(ListItemViewModel.class)) {
+        } else if(modelClass.isAssignableFrom(NoteViewModel.class)) {
 
-            return (T) new ListItemViewModel(mListItemRepository);
+            return (T) new NoteViewModel(mListItemRepository);
 
-        } else if(modelClass.isAssignableFrom(NewListItemViewModel.class)) {
+        } else if(modelClass.isAssignableFrom(NewNoteViewModel.class)) {
 
-            return (T) new NewListItemViewModel(mListItemRepository);
+            return (T) new NewNoteViewModel(mListItemRepository);
 
         } else {
 

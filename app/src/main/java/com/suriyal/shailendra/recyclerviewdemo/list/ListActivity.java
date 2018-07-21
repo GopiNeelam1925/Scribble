@@ -35,7 +35,7 @@ public class ListActivity extends BaseActivity {
 //    private static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 //    private static final String EXTRA_DRAWABLES = "EXTRA_DRAWABLES";
 //
-//    private List<ListItem> mListItems;
+//    private List<Note> mListItems;
 //
 //    private LayoutInflater mLayoutInflater;
 //    private RecyclerView mRecyclerView;
@@ -106,7 +106,7 @@ public class ListActivity extends BaseActivity {
 //    }
 //
 //    @Override
-//    public void setupAdapterAndView(List<ListItem> listData) {
+//    public void setupAdapterAndView(List<Note> listData) {
 //        this.mListItems = listData;
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 //
@@ -129,7 +129,7 @@ public class ListActivity extends BaseActivity {
 //    }
 //
 //    @Override
-//    public void addNewListItemToView(ListItem listItem) {
+//    public void addNewListItemToView(Note listItem) {
 //        mListItems.add(listItem);
 //
 //        int endOfList = mListItems.size()-1;
@@ -170,7 +170,7 @@ public class ListActivity extends BaseActivity {
 //    }
 //
 //    @Override
-//    public void insertListItemAt(int position, ListItem listItem) {
+//    public void insertListItemAt(int position, Note listItem) {
 //        mListItems.add(position,listItem);
 //        mAdapter.notifyItemInserted(position);
 //
@@ -190,10 +190,10 @@ public class ListActivity extends BaseActivity {
 //
 //        @Override
 //        public void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, int i) {
-//            ListItem currentItem = mListItems.get(i);
+//            Note currentItem = mListItems.get(i);
 //
 //            customViewHolder.mColoredCircle.setImageResource(currentItem.getColorResource());
-//            customViewHolder.mDateAndTime.setText(currentItem.getItemId());
+//            customViewHolder.mDateAndTime.setText(currentItem.getNoteId());
 //            customViewHolder.mMessage.setText(currentItem.getMessage());
 //
 //            customViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
@@ -229,7 +229,7 @@ public class ListActivity extends BaseActivity {
 //
 //            @Override
 //            public void onClick(View view) {
-//                ListItem listItem = mListItems.get(this.getAdapterPosition());
+//                Note listItem = mListItems.get(this.getAdapterPosition());
 //                mController.onListItemClicked(listItem,
 //                        view);
 //            }

@@ -21,14 +21,14 @@
     android:id="@+id/root_activity_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".detail.DetailActivity">
+    tools:context=".details.DetailActivity">
 
     <ImageView
         android:id="@+id/imv_colored_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/div_center"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:transitionName="@string/transition_drawable" />
 
 
@@ -53,6 +53,7 @@
         />
 
     <TextView
+        style="@style/Text.Secondary"
         android:id="@+id/lbl_message_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

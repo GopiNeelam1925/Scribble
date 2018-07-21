@@ -14,12 +14,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.suriyal.shailendra.recyclerviewdemo.R;
 import com.suriyal.shailendra.recyclerviewdemo.RoomDemoApplication;
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
+import com.suriyal.shailendra.recyclerviewdemo.data.Note;
 import com.suriyal.shailendra.recyclerviewdemo.list.ListActivity;
-import com.suriyal.shailendra.recyclerviewdemo.viewmodel.NewListItemViewModel;
+import com.suriyal.shailendra.recyclerviewdemo.viewmodel.NewNoteViewModel;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.text.DateFormat;
@@ -47,7 +48,7 @@ public class CreateFragment extends Fragment {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
-    private NewListItemViewModel newListItemViewModel;
+    private NewNoteViewModel mNewNoteViewModel;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -72,8 +73,8 @@ public class CreateFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //Set up and subscribe (observe) to the ViewModel
-        newListItemViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(NewListItemViewModel.class);
+        mNewNoteViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(NewNoteViewModel.class);
 
     }
 
@@ -95,14 +96,19 @@ public class CreateFragment extends Fragment {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListItem listItem = new ListItem(
-                        getDate(),
-                        messageInput.getText().toString(),
-                        getDrawableResource(drawablePager.getCurrentItem())
-                );
-                newListItemViewModel.addNewItemToDatabase(listItem);
+                if (messageInput.getText().length() == 0){
+                    Toast.makeText(getActivity(), "Hey!!! You forgot to add note...",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    Note note = new Note(
+                            getDate(),
+                            messageInput.getText().toString(),
+                            getDrawableResource(drawablePager.getCurrentItem())
+                    );
+                    mNewNoteViewModel.addNewItemToDatabase(note);
 
-                startListActivity();
+                    startListActivity();
+                }
             }
         });
 
@@ -122,13 +128,13 @@ public class CreateFragment extends Fragment {
     public int getDrawableResource (int pagerItemPosition){
         switch (pagerItemPosition){
             case 0:
-                return R.drawable.red_drawable;
+                return R.drawable.round_add_shopping_cart_24 ;
             case 1:
-                return R.drawable.blue_drawable;
+                return R.drawable.round_work_outline_24 ;
             case 2:
-                return R.drawable.green_drawable;
+                return R.drawable.round_flight_takeoff_24;
             case 3:
-                return R.drawable.yellow_drawable;
+                return R.drawable.round_alarm_24;
             default:
                 return 0;
         }
@@ -149,16 +155,16 @@ public class CreateFragment extends Fragment {
 
             switch (position) {
                 case 0:
-                    pagerItem.setImageResource(R.drawable.red_drawable);
+                    pagerItem.setImageResource(R.drawable.round_add_shopping_cart_24);
                     break;
                 case 1:
-                    pagerItem.setImageResource(R.drawable.blue_drawable);
+                    pagerItem.setImageResource(R.drawable.round_work_outline_24);
                     break;
                 case 2:
-                    pagerItem.setImageResource(R.drawable.green_drawable);
+                    pagerItem.setImageResource(R.drawable.round_flight_takeoff_24);
                     break;
                 case 3:
-                    pagerItem.setImageResource(R.drawable.yellow_drawable);
+                    pagerItem.setImageResource(R.drawable.round_alarm_24);
                     break;
             }
 

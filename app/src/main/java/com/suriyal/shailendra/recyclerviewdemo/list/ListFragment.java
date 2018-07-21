@@ -23,15 +23,16 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.suriyal.shailendra.recyclerviewdemo.R;
 import com.suriyal.shailendra.recyclerviewdemo.RoomDemoApplication;
 import com.suriyal.shailendra.recyclerviewdemo.create.CreateActivity;
-import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
+import com.suriyal.shailendra.recyclerviewdemo.data.Note;
 import com.suriyal.shailendra.recyclerviewdemo.details.DetailActivity;
-import com.suriyal.shailendra.recyclerviewdemo.viewmodel.ListItemCollectionViewModel;
+import com.suriyal.shailendra.recyclerviewdemo.viewmodel.NoteCollectionViewModel;
 
 import java.util.List;
 
@@ -47,18 +48,19 @@ public class ListFragment extends Fragment {
 
     private static final String EXTRA_ITEM_ID = "EXTRA_ITEM_ID";
 
-    private List<ListItem> listOfData;
+    private List<Note> listOfData;
 
     private LayoutInflater layoutInflater;
     private RecyclerView recyclerView;
     private CustomAdapter adapter;
+    private LinearLayout mLinearLayout;
     private Toolbar toolbar;
 
     @Inject
             ViewModelProvider.Factory viewModelFactory;
 
 
-    ListItemCollectionViewModel listItemCollectionViewModel;
+    NoteCollectionViewModel mNoteCollectionViewModel;
 
     public ListFragment() {
     }
@@ -80,14 +82,16 @@ public class ListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //Set up and subscribe (observe) to the ViewModel
-        listItemCollectionViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(ListItemCollectionViewModel.class);
+        mNoteCollectionViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(NoteCollectionViewModel.class);
 
-        listItemCollectionViewModel.getListItems().observe(this, new Observer<List<ListItem>>() {
+        mNoteCollectionViewModel.getListItems().observe(this, new Observer<List<Note>>() {
             @Override
-            public void onChanged(@Nullable List<ListItem> listItems) {
+            public void onChanged(@Nullable List<Note> notes) {
                 if (listOfData == null) {
-                    setListData(listItems);
+                    setListData(notes);
+                } else if (listOfData.size() == 0){
+                    mLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -101,6 +105,7 @@ public class ListFragment extends Fragment {
 
         recyclerView = (RecyclerView) v.findViewById(R.id.rec_list_activity);
         layoutInflater = getActivity().getLayoutInflater();
+        mLinearLayout = (LinearLayout) v.findViewById(R.id.layout_no_notes_available);
         toolbar = (Toolbar) v.findViewById(R.id.tlb_list_activity);
 
         toolbar.setTitle(R.string.title_toolbar);
@@ -165,8 +170,13 @@ public class ListFragment extends Fragment {
     }
 
 
-    public void setListData(List<ListItem> listOfData) {
+    public void setListData(List<Note> listOfData) {
         this.listOfData = listOfData;
+         if (listOfData.size() == 0) {
+            mLinearLayout.setVisibility(View.VISIBLE);
+        } else {
+            mLinearLayout.setVisibility(View.GONE);
+        }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -209,7 +219,7 @@ public class ListFragment extends Fragment {
         @Override
         public void onBindViewHolder(CustomAdapter.CustomViewHolder holder, int position) {
             //11. and now the ViewHolder data
-            ListItem currentItem = listOfData.get(position);
+            Note currentItem = listOfData.get(position);
 
             holder.coloredCircle.setImageResource(currentItem.getColorResource());
 
@@ -219,7 +229,7 @@ public class ListFragment extends Fragment {
             );
 
             holder.dateAndTime.setText(
-                    currentItem.getItemId()
+                    currentItem.getNoteId()
             );
 
             holder.loading.setVisibility(View.INVISIBLE);
@@ -262,11 +272,11 @@ public class ListFragment extends Fragment {
             public void onClick(View v) {
                 //getAdapterPosition() get's an Integer based on which the position of the current
                 //ViewHolder (this) in the Adapter. This is how we get the correct Data.
-                ListItem listItem = listOfData.get(
+                Note note = listOfData.get(
                         this.getAdapterPosition()
                 );
 
-                startDetailActivity(listItem.getItemId(), v);
+                startDetailActivity(note.getNoteId(), v);
 
             }
         }
@@ -287,7 +297,7 @@ public class ListFragment extends Fragment {
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 int position = viewHolder.getAdapterPosition();
-                listItemCollectionViewModel.deleteListItem(
+                mNoteCollectionViewModel.deleteListItem(
                         listOfData.get(position)
                 );
 
