@@ -72,6 +72,15 @@
             android:src="@drawable/ic_arrow_back_white_24dp"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            style="@style/Text.Primary"
+            android:textColor="@android:color/white"
+            android:text="@string/create_note"/>
+
         <ImageButton
             android:id="@+id/imb_create_done"
             style="@style/ImageButtonToolbar"

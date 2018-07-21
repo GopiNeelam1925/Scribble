@@ -109,7 +109,7 @@ public class ListFragment extends Fragment {
         toolbar = (Toolbar) v.findViewById(R.id.tlb_list_activity);
 
         toolbar.setTitle(R.string.title_toolbar);
-        toolbar.setLogo(R.drawable.ic_view_list_white_24dp);
+        toolbar.setLogo(R.drawable.round_note_add_24);
         toolbar.setTitleMarginStart(72);
 
         FloatingActionButton fabulous = (FloatingActionButton) v.findViewById(R.id.fab_create_new_item);

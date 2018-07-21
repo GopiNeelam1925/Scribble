@@ -97,7 +97,7 @@ public class CreateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (messageInput.getText().length() == 0){
-                    Toast.makeText(getActivity(), "Hey!!! You forgot to add note...",
+                    Toast.makeText(getActivity(), getString(R.string.forgot_text),
                             Toast.LENGTH_LONG).show();
                 } else {
                     Note note = new Note(
