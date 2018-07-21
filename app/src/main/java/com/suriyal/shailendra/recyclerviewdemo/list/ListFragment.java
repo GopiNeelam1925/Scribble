@@ -90,7 +90,7 @@ public class ListFragment extends Fragment {
             public void onChanged(@Nullable List<Note> notes) {
                 if (listOfData == null) {
                     setListData(notes);
-                } else {
+                } else if (listOfData.size() == 0){
                     mLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
