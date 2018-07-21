@@ -21,7 +21,7 @@
     android:id="@+id/root_activity_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".detail.DetailActivity">
+    tools:context=".details.DetailActivity">
 
     <ImageView
         android:id="@+id/imv_colored_background"
