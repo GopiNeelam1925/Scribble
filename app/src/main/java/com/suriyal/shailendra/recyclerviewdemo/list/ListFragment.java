@@ -23,6 +23,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -52,6 +53,7 @@ public class ListFragment extends Fragment {
     private LayoutInflater layoutInflater;
     private RecyclerView recyclerView;
     private CustomAdapter adapter;
+    private LinearLayout mLinearLayout;
     private Toolbar toolbar;
 
     @Inject
@@ -88,6 +90,8 @@ public class ListFragment extends Fragment {
             public void onChanged(@Nullable List<Note> notes) {
                 if (listOfData == null) {
                     setListData(notes);
+                } else {
+                    mLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -101,6 +105,7 @@ public class ListFragment extends Fragment {
 
         recyclerView = (RecyclerView) v.findViewById(R.id.rec_list_activity);
         layoutInflater = getActivity().getLayoutInflater();
+        mLinearLayout = (LinearLayout) v.findViewById(R.id.layout_no_notes_available);
         toolbar = (Toolbar) v.findViewById(R.id.tlb_list_activity);
 
         toolbar.setTitle(R.string.title_toolbar);
@@ -167,6 +172,11 @@ public class ListFragment extends Fragment {
 
     public void setListData(List<Note> listOfData) {
         this.listOfData = listOfData;
+         if (listOfData.size() == 0) {
+            mLinearLayout.setVisibility(View.VISIBLE);
+        } else {
+            mLinearLayout.setVisibility(View.GONE);
+        }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
