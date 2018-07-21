@@ -19,7 +19,7 @@ public interface ListItemDAO {
     @Query("SELECT * FROM ListItem")
     LiveData<List<ListItem>> getListItems();
 
-    @Query("SELECT * FROM ListItem where dateAndTime = :itemId")
+    @Query("SELECT * FROM ListItem WHERE itemId = :itemId")
     LiveData<ListItem> getListItemById(String itemId);
 
     @Insert(onConflict = REPLACE)
@@ -28,5 +28,5 @@ public interface ListItemDAO {
     @Delete
     void deleteListItem(ListItem listItem);
 
-    void insertListItemAt(int temporaryListItemPosition);
+
 }

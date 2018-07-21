@@ -1,14 +1,25 @@
 package com.suriyal.shailendra.recyclerviewdemo.details;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.suriyal.shailendra.recyclerviewdemo.R;
+import com.suriyal.shailendra.recyclerviewdemo.RoomDemoApplication;
+import com.suriyal.shailendra.recyclerviewdemo.data.ListItem;
+import com.suriyal.shailendra.recyclerviewdemo.viewmodel.ListItemViewModel;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,34 +27,29 @@ import com.suriyal.shailendra.recyclerviewdemo.R;
  * create an instance of this fragment.
  */
 public class DetailFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String EXTRA_ITEM_ID = "EXTRA_ITEM_ID";
 
+    private TextView dateAndTime;
+    private TextView message;
+    private ImageView coloredBackground;
+
+    private String itemId;
+
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
+    ListItemViewModel listItemViewModel;
 
     public DetailFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetailFragment newInstance(String param1, String param2) {
+
+    public static DetailFragment newInstance(String itemId) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(EXTRA_ITEM_ID, itemId);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,18 +57,62 @@ public class DetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        ((RoomDemoApplication) getActivity().getApplication())
+                .getApplicationComponent()
+                .inject(this);
+
+        Bundle args = getArguments();
+
+        this.itemId = args.getString(EXTRA_ITEM_ID);
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //Set up and subscribe (observe) to the ViewModel
+        listItemViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(ListItemViewModel.class);
+
+        listItemViewModel.getListItemById(itemId).observe(this, new Observer<ListItem>() {
+            @Override
+            public void onChanged(@Nullable ListItem listItem) {
+                if (listItem != null) {
+                    dateAndTime.setText(listItem.getItemId());
+                    message.setText(listItem.getMessage());
+                    coloredBackground.setImageResource(listItem.getColorResource());
+                }
+
+            }
+        });
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
+        View v = inflater.inflate(R.layout.fragment_detail, container, false);
+
+        dateAndTime = (TextView) v.findViewById(R.id.lbl_date_and_time_header);
+
+        message = (TextView) v.findViewById(R.id.lbl_message_body);
+
+
+        coloredBackground = (ImageView) v.findViewById(R.id.imv_colored_background);
+
+        return v;
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
 }

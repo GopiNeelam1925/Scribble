@@ -9,8 +9,6 @@ import com.suriyal.shailendra.recyclerviewdemo.data.ListItemRepository;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 /**
  * Created by shailendra.suriyal
  */

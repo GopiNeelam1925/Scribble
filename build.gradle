@@ -42,7 +42,7 @@ ext {
     daggerVersion = '2.13'
 
     //android
-    supportLibraryVersion = '28.0.0-alpha3'
+    supportLibraryVersion = '27.0.2'
     constraintLayoutVersion = '1.1.2'
     archLifecycleVersion = '1.0.3'
     archLifecycleCompilerVersion = '1.0.0'

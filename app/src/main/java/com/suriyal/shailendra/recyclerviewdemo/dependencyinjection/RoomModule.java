@@ -10,6 +10,7 @@ import android.arch.persistence.room.Room;
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItemDAO;
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItemDatabase;
 import com.suriyal.shailendra.recyclerviewdemo.data.ListItemRepository;
+import com.suriyal.shailendra.recyclerviewdemo.viewmodel.CustomViewModelFactory;
 
 import javax.inject.Singleton;
 

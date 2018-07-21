@@ -1,11 +1,9 @@
 package com.suriyal.shailendra.recyclerviewdemo.create;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 import com.suriyal.shailendra.recyclerviewdemo.R;
-import com.suriyal.shailendra.recyclerviewdemo.list.ListFragment;
 import com.suriyal.shailendra.recyclerviewdemo.util.BaseActivity;
 
 public class CreateActivity extends BaseActivity {
@@ -16,13 +14,14 @@ public class CreateActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create);
 
         FragmentManager manager = getSupportFragmentManager();
-        ListFragment fragment = (ListFragment) manager.findFragmentByTag(CREATE_FRAG);
+        CreateFragment fragment = (CreateFragment) manager.findFragmentByTag(CREATE_FRAG);
         if(fragment == null){
             fragment = CreateFragment.newInstance();
         }
 
-        addFragmentToActivity(manager,fragment, R.id.root_activity_list, CREATE_FRAG);
+        addFragmentToActivity(manager,fragment, R.id.root_activity_create, CREATE_FRAG);
     }
 }
