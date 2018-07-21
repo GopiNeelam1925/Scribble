@@ -37,11 +37,14 @@
     </style>
 
     <style name="Text.Primary">
+        <item name="android:textColor">#212121</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="Text.Secondary">
+
+        <item name="android:textColor">#757575</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">14sp</item>
     </style>
