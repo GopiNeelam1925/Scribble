@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.suriyal.shailendra.recyclerviewdemo.R;
 import com.suriyal.shailendra.recyclerviewdemo.RoomDemoApplication;
@@ -95,14 +96,19 @@ public class CreateFragment extends Fragment {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Note note = new Note(
-                        getDate(),
-                        messageInput.getText().toString(),
-                        getDrawableResource(drawablePager.getCurrentItem())
-                );
-                mNewNoteViewModel.addNewItemToDatabase(note);
+                if (messageInput.getText().length() == 0){
+                    Toast.makeText(getActivity(), "Hey!!! You forgot to add note...",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    Note note = new Note(
+                            getDate(),
+                            messageInput.getText().toString(),
+                            getDrawableResource(drawablePager.getCurrentItem())
+                    );
+                    mNewNoteViewModel.addNewItemToDatabase(note);
 
-                startListActivity();
+                    startListActivity();
+                }
             }
         });
 
