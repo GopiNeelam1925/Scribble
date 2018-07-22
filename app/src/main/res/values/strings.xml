@@ -17,7 +17,7 @@
   -->
 
 <resources>
-    <string name="app_name">Scribble</string>
+    <string name="app_name">Noting</string>
     <string name="action_delete_item">Item Deleted</string>
     <string name="action_undo">UNDO?</string>
 
@@ -25,7 +25,7 @@
     <string name="transition_drawable">drawable</string>
     <string name="transition_message">message</string>
     <string name="transition_time_and_date">date</string>
-    <string name="title_toolbar">Scribble</string>
+    <string name="title_toolbar">@string/app_name</string>
     <string name="forgot_text">Hey!!! You forgot to enter note...</string>
 
     <!-- TODO: Remove or change this placeholder text -->

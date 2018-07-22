@@ -3,14 +3,15 @@
     package="com.suriyal.shailendra.recyclerviewdemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:name="com.suriyal.shailendra.recyclerviewdemo.RoomDemoApplication"
+        android:name=".RoomDemoApplication"
         android:icon="@drawable/ic_app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".list.ListActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".create.CreateActivity" />
-        <activity android:name=".details.DetailActivity"/>
+        <activity android:name=".details.DetailActivity" />
+        <activity android:name=".list.ListActivity"></activity>
     </application>
 
 </manifest>
